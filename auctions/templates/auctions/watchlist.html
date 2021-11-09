@@ -1,0 +1,31 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}My Watchlist{% endblock title %}
+
+{% block body %}
+
+    <div><h3>My Watchlist</h3></div>
+
+    {% if watchlist %}
+        {% for item in watchlist %}
+
+            <ul>
+                <li>
+                    <div>
+                        <a href={% url 'auctions:listing' listing_id=item.listing.id%}>{{ item.listing.title }}</a>
+                        : starting price ${{ item.listing.price}} / highest bid {{ item.listing.bid }}
+                    </div>
+
+                    <div>
+                        <a class="nav-link btn btn-primary" href="{% url 'auctions:watchlist_remove' item.listing.id %}" 
+                            alt="Remove from Wathclist">Remove from Watchlist</a>
+                    </div>
+                </li>
+            </ul>
+            
+        {% endfor %}
+    {% else %}
+        <div>No items added to Watchlist yet.</div>
+    {% endif %}
+    
+{% endblock body %}

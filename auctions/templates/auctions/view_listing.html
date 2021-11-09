@@ -1,0 +1,85 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+{% block body %}
+
+    <div><h1>{{ listing.title }}</h1></div>
+
+    {% if not listing.active %}
+        {% if listing.winner %}
+            <h2>Listing is closed. The winner is: {{ listing.winner }}.
+        {% endif %}
+    {% endif %}
+
+    <div><img src="{{ listing.image }}" class="image" alt="Image of {{ listing.description }}"></div>
+
+    <div><h5>Description: {{ listing.description }}</h5></div>
+
+    {% if listing.bid %}
+        <div>Current price: ${{ listing.bid.size }}</div>
+    {% else %}
+        <div>Current price: ${{ listing.price }}</div>
+    {%endif %}
+
+    <div><h5>Details</h5></div>
+    <ul>
+        <li>Listed by: {{ listing.user }}</li>
+        <li>Category: {{ listing.category }}</li>
+    </ul>
+
+    {% if user.is_authenticated %}
+        {% if not listing.winner %}
+            <h4>Make a new bid (should be greater than current price)</h4>
+            <form action="{% url 'auctions:bid' listing.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="bid" placeholder="Enter bid size, $" size=20>
+                <input type="submit" value="Make a bid">
+                <div>
+                    {% if message_error %}
+                        {{ message_error }}
+                    {% endif %}
+                </div>
+            </form>
+        {% endif %}
+    {% else %}
+        <div>To make a bid you must be logged in.</div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if not watched %}
+            <div>
+                <span><a type="button" class="btn btn-primary" 
+                       href="{% url 'auctions:watchlist_add' listing_id=listing.id %}">
+                       Add to Watchlist</a></span>
+            </div>
+        {% else %}
+            <div>
+                <span class="btn btn-secondary">In Watchlist</span>
+            </div>
+        {% endif %}
+
+        {% include "auctions/close_listing.html" %}
+
+        <form action="{% url 'auctions:comment_add' listing.id %}" method="POST">
+            {% csrf_token %}
+
+            <textarea name="text" cols="100" rows="5" placeholder="Enter comment here"></textarea>
+            <input type="submit" value="Submit Comment">
+
+        </form>
+    {% endif %}
+
+    <h3>Comments</h3>
+    {% for comment in listing.comments.all %}
+        <div>{{ comment.text }}</div>
+        <div>{{ comment.author }}</div>
+        <div>{{ comment.date }}</div>
+
+    {% empty %}
+        <div>No comments yet</div>
+    
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,9 @@
+<form action="{% url 'auctions:comment_add' listing.id %}" method="POST">
+    {% csrf_token %}
+
+    {{ form }}
+    {% comment %} <textarea cols="100" rows="5" placeholder="Enter comment here"></textarea> {% endcomment %}
+    <input type="submit" value="Submit Comment">
+
+</form>
+

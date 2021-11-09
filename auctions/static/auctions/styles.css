@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.body-content-wrapper {
+    padding: 10px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(233, 231, 231);
+    border-top: 1px solid rgb(102, 102, 102);
+    width: 100%;
+    background-color: lightgray;
+    margin-top: auto;
+}
+
+footer .content-wrapper {
+    text-align: center;
+}
+
+.listing-wrapper {
+    border-top: 1px solid lightgray;
+}
+
+.listing-title {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.image {
+    height: 30vh;
+}

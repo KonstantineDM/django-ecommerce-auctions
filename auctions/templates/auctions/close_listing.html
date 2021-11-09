@@ -1,0 +1,7 @@
+{% ifequal user listing.user %}
+
+    {% if listing.active %}
+        <span><a class="btn btn-primary" href="{% url 'auctions:close_listing' listing.id %}">Close Listing</a></span>
+    {% endif %}
+
+{% endifequal %}

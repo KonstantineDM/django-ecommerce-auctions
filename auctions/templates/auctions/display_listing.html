@@ -1,0 +1,31 @@
+{% load static %}
+
+{% if listing.active %}
+    <div class="listing-wrapper">
+        <div class="listing_title link">
+            <a href="{% url 'auctions:listing' listing.id %}" alt="{{ listing.title }}"><h3>{{ listing.title }}</h3></a>
+        </div>
+
+        <div class="listing-image">
+            {% if listing.image %}
+                <div class="listing_image link"><img class="image" src="{{ listing.image }}" alt="{{ listing.title }}"></div>
+            {% endif %}
+        </div>
+
+        <div>{{ listing.description }}</div>
+
+        <div class="starting_price"><b>Starting price:</b> ${{ listing.price }}</div>
+
+        <div class="bid_info">
+            {% if listing.bid %}
+                <b>Highest Bid:</b> ${{ listing.bid.size }}
+            {% else %}
+                <b>Highest Bid:</b> No bids made yet.
+            {% endif %}
+        </div>
+
+        <div class="listing-author">Listed by: {{ listing.user }}</div>
+
+        <div class="listing-date">Created: {{ listing.date }}</div>
+    </div>
+{% endif %}

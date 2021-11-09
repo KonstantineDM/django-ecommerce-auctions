@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="index_view">
+    <h2>Active Listings</h2>
+    <div class="listings_all">
+
+    {% for listing in listings %}
+        {% include 'auctions/display_listing.html' %}
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
